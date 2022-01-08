@@ -3,6 +3,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace NiceDishy
@@ -14,7 +15,7 @@ namespace NiceDishy
     {
         public TaskbarIcon notifyIcon;
 
-        private System.Timers.Timer pushDataTimer;
+        private System.Windows.Threading.DispatcherTimer pushDataTimer;
         private System.Timers.Timer pushSpeedTimer;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -37,13 +38,13 @@ namespace NiceDishy
                 DishyService.Shared.GetStatusAsync();
             }
 
-            pushDataTimer = new System.Timers.Timer(60 * 1000); // every minute
-            pushDataTimer.AutoReset = true;
-            pushDataTimer.Elapsed += onPushDataTimer;
-            pushDataTimer.Enabled = true;
+            pushDataTimer = new System.Windows.Threading.DispatcherTimer();
+            pushDataTimer.Interval = new TimeSpan(0, 1, 0);
+            pushDataTimer.Tick += new EventHandler(onPushDataTimer);
+            pushDataTimer.Start();
         }
 
-        private void onPushDataTimer(object sender, ElapsedEventArgs e)
+        private void onPushDataTimer(object sender, EventArgs e)
         {
             if (ApiManager.Shared.IsLoggedIn())
             {
