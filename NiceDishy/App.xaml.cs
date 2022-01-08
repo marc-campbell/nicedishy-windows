@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -12,6 +13,9 @@ namespace NiceDishy
     public partial class App : Application
     {
         public TaskbarIcon notifyIcon;
+
+        private System.Timers.Timer pushDataTimer;
+        private System.Timers.Timer pushSpeedTimer;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -26,8 +30,26 @@ namespace NiceDishy
             // Register Uri Scheme
             ApiManager.Shared.Initialize();
             ApiManager.Shared.RegisterUriScheme();
+
+            // First push on start
+            if (ApiManager.Shared.IsLoggedIn())
+            {
+                DishyService.Shared.GetStatusAsync();
+            }
+
+            pushDataTimer = new System.Timers.Timer(60 * 1000); // every minute
+            pushDataTimer.AutoReset = true;
+            pushDataTimer.Elapsed += onPushDataTimer;
+            pushDataTimer.Enabled = true;
         }
 
+        private void onPushDataTimer(object sender, ElapsedEventArgs e)
+        {
+            if (ApiManager.Shared.IsLoggedIn())
+            {
+                DishyService.Shared.GetStatusAsync();
+            }
+        }
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner

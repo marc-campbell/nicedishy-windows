@@ -48,24 +48,6 @@ namespace NiceDishy
         }
 
         /// <summary>
-        /// Get Status Menu Action.
-        /// </summary>
-        public ICommand GetStatusCommand
-        {
-            get
-            {
-                return new DelegateCommand
-                {
-                    CanExecuteFunc = () => true,
-                    CommandAction = () =>
-                    {
-                        DishyService.Shared.GetStatusAsync();
-                    }
-                };
-            }
-        }
-
-        /// <summary>
         /// Shows a window, if none is already open.
         /// </summary>
         public ICommand ShowWindowCommand

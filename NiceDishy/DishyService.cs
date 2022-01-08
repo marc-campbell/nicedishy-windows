@@ -23,11 +23,11 @@ namespace NiceDishy
             try
             {
                 // var response = client.Handle(request);
-                var response = await client.HandleAsync(request);
+                var dishyResponse = await client.HandleAsync(request);
 
+                var payload = new DishyDataPayload(dishyResponse);
 
-                var responseStr = Newtonsoft.Json.JsonConvert.SerializeObject(response);
-                Console.WriteLine(responseStr);
+                ApiManager.Shared.PushData(payload.toNiceDishyPayload());
             }
             catch (Exception e)
             {

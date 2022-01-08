@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Win32;
+using System.Net;
 
 namespace NiceDishy
 {
@@ -51,6 +52,10 @@ namespace NiceDishy
             }
         }
 
+        public bool IsLoggedIn()
+        {
+            return Token != null;
+        }
         public void ConnectDishy()
         {
             System.Diagnostics.Process.Start(ConnectDishyUrl);
@@ -122,22 +127,21 @@ namespace NiceDishy
         #endregion
 
         #region
-        public async void Push(object payload)
+        public async void PushData(string payload)
         {
             if (string.IsNullOrEmpty(Token))
                 return;
 
             try
             {
-                string jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(payload);
-
                 var client = new HttpClient();
                 var request = new HttpRequestMessage();
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(PushDataUrl);
-                request.Content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
-                request.Headers.Add("Authorization", string.Format("Token ${0}", Token));
+                request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+                request.Headers.Add("Authorization", string.Format("Token {0}", Token));
 
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 var response = await client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
                 {
