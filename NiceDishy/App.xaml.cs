@@ -20,11 +20,12 @@ namespace NiceDishy
             // Register or Handle Uri Scheme
             HandleArguments(e);
 
-            // Register Uri Scheme
-            ApiManager.Shared.RegisterUriScheme();
-
             // Create the notifyicon (it's a resource declared in NotifyIconResources.xaml)
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+
+            // Register Uri Scheme
+            ApiManager.Shared.Initialize();
+            ApiManager.Shared.RegisterUriScheme();
         }
 
         protected override void OnExit(ExitEventArgs e)

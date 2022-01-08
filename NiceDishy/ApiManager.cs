@@ -15,10 +15,11 @@ namespace NiceDishy
 
         const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
         const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
+        const string PushSpeedUrl = "https://nicedishy-api.marccampbell.cloud.okteto.net/api/v1/speed";
 
         const string UriScheme = "nicedishy";
         const string UriFriendlyName = "NiceDishy Protocol";
-
+        
         #region Token
         public static readonly DependencyProperty TokenProperty =
            DependencyProperty.Register("Token", typeof(string), typeof(ApiManager), new
@@ -34,12 +35,34 @@ namespace NiceDishy
             set { SetValue(TokenProperty, value); }
         }
         #endregion
+
+        // Initialize will load any previously saved token
+        public void Initialize()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
+
+            key.CreateSubKey("NiceDishy");
+            key = key.OpenSubKey("NiceDishy", true);
+
+            var token = key.GetValue("token");
+            if (token != null)
+            {
+                Token = token.ToString();
+            }
+        }
+
         public void ConnectDishy()
         {
             System.Diagnostics.Process.Start(ConnectDishyUrl);
         }
         public void DisconnectDishy()
         {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
+
+            key.CreateSubKey("NiceDishy");
+            key = key.OpenSubKey("NiceDishy", true);
+
+            key.DeleteValue("token");
             Token = "";
         }
 
@@ -86,7 +109,14 @@ namespace NiceDishy
                 // TODO do something with the uri
                 var query = uri.Query.Replace("?", "");
                 var queryValues = query.Split('&').Select(q => q.Split('=')).ToDictionary(k => k[0], v => v[1]);
+
+                RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
+
+                key.CreateSubKey("NiceDishy");
+                key = key.OpenSubKey("NiceDishy", true);
+                key.SetValue("token", queryValues["token"]);
                 Token = queryValues["token"];
+
             }
         }
         #endregion
