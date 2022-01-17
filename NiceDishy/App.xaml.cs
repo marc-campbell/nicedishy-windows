@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -14,9 +13,10 @@ namespace NiceDishy
     public partial class App : Application
     {
         public TaskbarIcon notifyIcon;
+        public Preferences preferences;
 
-        private System.Windows.Threading.DispatcherTimer pushDataTimer;
-        private System.Timers.Timer pushSpeedTimer;
+        private DispatcherTimer dataTimer;
+        private DispatcherTimer speedTestTimer;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -35,28 +35,20 @@ namespace NiceDishy
             // First push on start
             if (ApiManager.Shared.IsLoggedIn())
             {
-                DishyService.Shared.GetStatusAsync();
+                DishyService.Shared.GetDataAsync();
+                DishyService.Shared.GetSpeedAsync();
             }
 
-            pushDataTimer = new System.Windows.Threading.DispatcherTimer();
-            pushDataTimer.Interval = new TimeSpan(0, 1, 0);
-            pushDataTimer.Tick += new EventHandler(onPushDataTimer);
-            pushDataTimer.Start();
+            // Timer
+            CreateTimers();
         }
 
-        private void onPushDataTimer(object sender, EventArgs e)
-        {
-            if (ApiManager.Shared.IsLoggedIn())
-            {
-                DishyService.Shared.GetStatusAsync();
-            }
-        }
         protected override void OnExit(ExitEventArgs e)
         {
             notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
             base.OnExit(e);
         }
-        public void UpdateNotifyIcon()
+        public void OnTokenUpdated()
         {
             if (string.IsNullOrEmpty(ApiManager.Shared.Token))
             {
@@ -68,7 +60,37 @@ namespace NiceDishy
                 ContextMenu menu = (ContextMenu)FindResource("SysTrayMenuLoggedIn");
                 notifyIcon.ContextMenu = menu;
             }
+
+            CreateTimers();
         }
+
+        #region Timer
+        public void CreateTimers()
+        {
+            if (ApiManager.Shared.IsLoggedIn())
+            {
+                CreateDataTimer();
+                CreateSpeedTestTimer();
+            }
+        }
+
+        public void CreateDataTimer()
+        {
+            dataTimer = new DispatcherTimer();
+            dataTimer.Interval = new TimeSpan(0, Preferences.FreqSendingData, 0);
+            dataTimer.Tick += new EventHandler((sender, e) => DishyService.Shared.GetDataAsync());
+            dataTimer.Start();
+        }
+
+        public void CreateSpeedTestTimer()
+        {
+            speedTestTimer = new DispatcherTimer();
+            speedTestTimer.Interval = new TimeSpan(0, Preferences.FreqSendingData, 0);
+            speedTestTimer.Tick += new EventHandler((sender, e) => DishyService.Shared.GetSpeedAsync());
+            speedTestTimer.Start();
+        }
+
+        #endregion
 
         private void HandleArguments(StartupEventArgs e)
         {

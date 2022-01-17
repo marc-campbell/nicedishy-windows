@@ -48,19 +48,19 @@ namespace NiceDishy
         }
 
         /// <summary>
-        /// Shows a window, if none is already open.
+        /// Shows Preference.
         /// </summary>
-        public ICommand ShowWindowCommand
+        public ICommand PreferencesCommand
         {
             get
             {
                 return new DelegateCommand
                 {
-                    CanExecuteFunc = () => Application.Current.MainWindow == null,
+                    CanExecuteFunc = () => true,
                     CommandAction = () =>
                     {
-                        Application.Current.MainWindow = new MainWindow();
-                        Application.Current.MainWindow.Show();
+                        ((App)Application.Current).preferences = new Preferences();
+                        ((App)Application.Current).preferences.Show();
                     }
                 };
             }

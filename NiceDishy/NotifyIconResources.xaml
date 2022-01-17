@@ -6,6 +6,8 @@
     <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
         <MenuItem Header="Connect Dishy" Command="{Binding ConnectDishyCommand}" />
         <Separator />
+        <MenuItem Header="Preference" Command="{Binding PreferencesCommand}" />
+        <Separator />
         <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
     </ContextMenu>
 
@@ -13,6 +15,8 @@
         <MenuItem Header="Disconnect Dishy" Command="{Binding DisconnectDishyCommand}" />
         <Separator />
         <MenuItem Header="Get Status" Command="{Binding GetStatusCommand}" />
+        <Separator />
+        <MenuItem Header="Preference" Command="{Binding PreferencesCommand}" />
         <Separator />
         <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
     </ContextMenu>    

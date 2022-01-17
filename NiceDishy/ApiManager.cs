@@ -28,7 +28,7 @@ namespace NiceDishy
         private static void OnTokenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             App app = (App)Application.Current;
-            app.UpdateNotifyIcon();
+            app.OnTokenUpdated();
         }
         public string Token
         {
@@ -40,18 +40,18 @@ namespace NiceDishy
         // Initialize will load any previously saved token
         public void Initialize()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
-
-            key.CreateSubKey("NiceDishy");
-            key = key.OpenSubKey("NiceDishy", true);
-
-            var token = key.GetValue("token");
-            if (token != null)
+            RegistryKey subKey = Registry.CurrentUser.OpenSubKey("Software", true);
+            using (var key = subKey.CreateSubKey("NiceDishy"))
             {
-                Token = token.ToString();
+                var token = key.GetValue("token");
+                if (token != null)
+                {
+                    Token = token.ToString();
+                }
             }
         }
 
+        #region Connect
         public bool IsLoggedIn()
         {
             return Token != null;
@@ -62,14 +62,14 @@ namespace NiceDishy
         }
         public void DisconnectDishy()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
-
-            key.CreateSubKey("NiceDishy");
-            key = key.OpenSubKey("NiceDishy", true);
-
-            key.DeleteValue("token");
-            Token = "";
+            RegistryKey subKey = Registry.CurrentUser.OpenSubKey("Software", true);
+            using (var key = subKey.CreateSubKey("NiceDishy"))
+            {
+                key.DeleteValue("token");
+                Token = "";
+            }
         }
+        #endregion
 
         #region Uri
         public void RegisterUriScheme()
@@ -115,18 +115,50 @@ namespace NiceDishy
                 var query = uri.Query.Replace("?", "");
                 var queryValues = query.Split('&').Select(q => q.Split('=')).ToDictionary(k => k[0], v => v[1]);
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
-
-                key.CreateSubKey("NiceDishy");
-                key = key.OpenSubKey("NiceDishy", true);
-                key.SetValue("token", queryValues["token"]);
-                Token = queryValues["token"];
-
+                RegistryKey subKey = Registry.CurrentUser.OpenSubKey("Software", true);
+                using (var key = subKey.CreateSubKey("NiceDishy"))
+                {
+                    key.SetValue("token", queryValues["token"]);
+                    Token = queryValues["token"];
+                }
             }
         }
         #endregion
 
-        #region
+        #region Push
+        public async void PushSpeed(string payload)
+        {
+            if (string.IsNullOrEmpty(Token))
+                return;
+
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage();
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(PushSpeedUrl);
+                request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+                request.Headers.Add("Authorization", string.Format("Token {0}", Token));
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var res = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
+                    Console.Write(res);
+                }
+                else
+                {
+                    var res = await response.Content.ReadAsStringAsync();
+                    Console.Write(res);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
         public async void PushData(string payload)
         {
             if (string.IsNullOrEmpty(Token))

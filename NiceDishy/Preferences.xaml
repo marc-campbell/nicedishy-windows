@@ -1,0 +1,24 @@
+﻿<Window x:Class="NiceDishy.Preferences"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NiceDishy"
+        mc:Ignorable="d"
+        Title="Preferences" Height="300" Width="400" Icon="icon_b22.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True">
+    <StackPanel Margin="10,20,10,10">
+        <Label  Content="Frequency for sending data:" VerticalAlignment="Center" Height="30" Margin="0,0,0,5"/>
+        <Slider Maximum="120" SmallChange="1" Value="5" Minimum="1" IsSnapToTickEnabled="True" Name="slFreqSendingData" />
+        <TextBlock Text="{Binding ElementName=slFreqSendingData, Mode=OneWay, StringFormat=\{0\} min, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Height="25" Margin="0,0,0,5" HorizontalAlignment="Right"/>
+
+        <Label  Content="Frequency for running speed tests:" VerticalAlignment="Center" Height="30" Margin="0,0,0,5"/>
+        <Slider Maximum="300" Minimum="1" SmallChange="1" Value="60" IsSnapToTickEnabled="True" Name="slFreqSpeedTests" />
+        <TextBlock Text="{Binding ElementName=slFreqSpeedTests, Mode=OneWay, StringFormat=\{0\} min, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Height="25" Margin="0,0,0,5" HorizontalAlignment="Right"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,35,0,0">
+            <Button Height="30" Click="OnCancel" Content="Cancel" Margin="0,0,10,0" Width="54" />
+            <Button Height="30" Click="OnSave" Content="Save" IsDefault="True" Width="50" />
+        </StackPanel>
+        
+    </StackPanel>
+</Window>

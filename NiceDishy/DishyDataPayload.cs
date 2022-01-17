@@ -18,7 +18,30 @@ namespace NiceDishy
 
         }
 
-        public string toNiceDishyPayload()
+        public string ToNiceDishyPayload()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    }
+
+    class DishySpeedTestPayload
+    {
+        public class DishySpeedTest
+        {
+            public double download;
+        }
+
+        public DishySpeedTest speed;
+        public DateTime when;
+
+        public DishySpeedTestPayload(double ds)
+        {
+            speed = new DishySpeedTest();
+            speed.download = ds;
+            when = DateTime.UtcNow;
+        }
+
+        public string ToNiceDishyPayload()
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
