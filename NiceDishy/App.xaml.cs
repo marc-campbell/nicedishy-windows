@@ -18,6 +18,9 @@ namespace NiceDishy
         private DispatcherTimer dataTimer;
         private DispatcherTimer speedTestTimer;
 
+        private FastSpeedTest downloadTester;
+        private FastSpeedTest uploadTester;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -41,6 +44,27 @@ namespace NiceDishy
 
             // Timer
             CreateTimers();
+
+            // Fast Speed Test
+            TestFastSpeed();
+        }
+        private void TestFastSpeed()
+        {
+            downloadTester = new FastSpeedTest();
+            downloadTester.completedHandler += OnDownloadSpeedCompleted;
+            downloadTester.Download();
+        }
+
+        private void OnDownloadSpeedCompleted(double speed)
+        {
+            Console.WriteLine("Final Download Speed is {0} Mbps", (long)speed / (1024 * 1024));
+            uploadTester = new FastSpeedTest();
+            uploadTester.completedHandler += OnUploadSpeedCompleted;
+            uploadTester.Upload();
+        }
+        private void OnUploadSpeedCompleted(double speed)
+        {
+            Console.WriteLine("Final Upload Speed is {0} Mbps", (long)speed / (1024 * 1024));
         }
 
         protected override void OnExit(ExitEventArgs e)

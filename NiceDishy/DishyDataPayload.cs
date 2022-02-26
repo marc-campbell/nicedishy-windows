@@ -29,15 +29,17 @@ namespace NiceDishy
         public class DishySpeedTest
         {
             public double download;
+            public double upload;
         }
 
         public DishySpeedTest speed;
         public DateTime when;
 
-        public DishySpeedTestPayload(double ds)
+        public DishySpeedTestPayload(double ds, double us = 0)
         {
             speed = new DishySpeedTest();
             speed.download = ds;
+            speed.upload = us;
             when = DateTime.UtcNow;
         }
 

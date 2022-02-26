@@ -125,10 +125,12 @@
     </ApplicationDefinition>
     <Compile Include="DishyDataPayload.cs" />
     <Compile Include="DishyDataPayloadStatus.cs" />
+    <Compile Include="FastSpeedTest.cs" />
     <Compile Include="Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
     <Compile Include="UriHandler.cs" />
+    <Compile Include="WebRequester.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
