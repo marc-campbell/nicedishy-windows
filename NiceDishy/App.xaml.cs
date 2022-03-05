@@ -39,7 +39,7 @@ namespace NiceDishy
             if (ApiManager.Shared.IsLoggedIn())
             {
                 DishyService.Shared.GetDataAsync();
-                DishyService.Shared.GetSpeedAsync();
+                DishyService.Shared.GetFastSpeed();
             }
 
             // Timer
@@ -65,6 +65,8 @@ namespace NiceDishy
         private void OnUploadSpeedCompleted(double speed)
         {
             Console.WriteLine("Final Upload Speed is {0} Mbps", (long)speed / (1024 * 1024));
+
+            DishyService.Shared.PushSpeed();
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -110,7 +112,7 @@ namespace NiceDishy
         {
             speedTestTimer = new DispatcherTimer();
             speedTestTimer.Interval = new TimeSpan(0, Preferences.FreqSendingData, 0);
-            speedTestTimer.Tick += new EventHandler((sender, e) => DishyService.Shared.GetSpeedAsync());
+            speedTestTimer.Tick += new EventHandler((sender, e) => DishyService.Shared.GetFastSpeed());
             speedTestTimer.Start();
         }
 

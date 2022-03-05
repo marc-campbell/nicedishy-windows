@@ -25,42 +25,6 @@ namespace NiceDishy
             uploadTester.completedHandler += OnUploadSpeedCompleted;
         }
 
-        public async void GetSpeedAsync()
-        {
-            try
-            {
-                var url = "https://speed.nicedishy.com/130mb";
-                var client = new HttpClient();
-                var request = new HttpRequestMessage();
-                request.Method = HttpMethod.Get;
-                request.RequestUri = new Uri(url);
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                var now = DateTime.Now;
-                var response = await client.SendAsync(request);
-                if (response.IsSuccessStatusCode)
-                {
-                    Console.Write("Download Success");
-                    var res = await response.Content.ReadAsByteArrayAsync();
-                    var cur = DateTime.Now;
-                    var dif = cur.Subtract(now).TotalSeconds;
-                    var downloadSpeed = Convert.ToDouble(res.Length) * 8 / dif;
-                    var payload = new DishySpeedTestPayload(downloadSpeed);
-
-                    ApiManager.Shared.PushSpeed(payload.ToNiceDishyPayload());
-                }
-                else
-                {
-                    var res = await response.Content.ReadAsStringAsync();
-                    Console.Write(res);
-                }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
         public void GetFastSpeed()
         {
             downloadTester.Download();
@@ -69,13 +33,11 @@ namespace NiceDishy
         private void OnDownloadSpeedCompleted(double speed)
         {
             Console.WriteLine("Final Download Speed is {0} Mbps", (long)speed / (1024 * 1024));
-
             uploadTester.Upload();
         }
         private void OnUploadSpeedCompleted(double speed)
         {
             Console.WriteLine("Final Upload Speed is {0} Mbps", (long)speed / (1024 * 1024));
-
             PushSpeed();
         }
         public void PushSpeed()

@@ -16,7 +16,7 @@ namespace NiceDishy
 
         const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
         const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
-        const string PushSpeedUrl = "https://nicedishy-api.marccampbell.cloud.okteto.net/api/v1/speed";
+        const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
 
         const string UriScheme = "nicedishy";
         const string UriFriendlyName = "NiceDishy Protocol";
@@ -152,7 +152,6 @@ namespace NiceDishy
                     var res = await response.Content.ReadAsStringAsync();
                     Console.Write(res);
                 }
-
             }
             catch (Exception e)
             {
