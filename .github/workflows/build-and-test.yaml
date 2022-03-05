@@ -19,10 +19,10 @@ jobs:
           dotnet-version: 5.0.x
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@latest
+        uses: microsoft/setup-msbuild@v1.1.1
 
       - name: Setup Nuget
-        uses: Nuget/setup-nuget@latest
+        uses: Nuget/setup-nuget@v1.0.5
 
       - name: Restore nuget packages
         run: nuget restore NiceDishy.sln
