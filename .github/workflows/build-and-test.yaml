@@ -52,8 +52,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./SampleX64.ZIP
-          asset_name: SampleX64.ZIP
+          asset_path: ./NiceDishyX64.zip
+          asset_name: NiceDishyX64.zip
           asset_content_type: application/zip
       - name: Upload Release Asset (x86)
         id: upload-release-asset-x86
