@@ -30,9 +30,11 @@ jobs:
       - name: Build Binary
         shell: cmd
         run: call .\deploy\Build.cmd
+      
       - name: Build Artifact
         shell: cmd
         run: call .\deploy\ArtifactBuild.cmd
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
