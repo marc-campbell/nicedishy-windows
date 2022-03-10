@@ -3,16 +3,16 @@
 
 # This continuous integration pipeline is triggered anytime a user pushes code to the repo.
 # This pipeline builds the Wpf project, runs unit tests, then saves the MSIX build artifact.
-name:  Wpf Continuous Integration
+name: NiceDishy CI
 
 # Trigger on every master branch push and pull request
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
 
