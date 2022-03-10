@@ -30,6 +30,8 @@ jobs:
       Solution_Path: NiceDishy.sln
       Wpf_Project_Path: NiceDishy\NiceDishy.csproj
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
+      Wap_Project_Directory: packaging\NiceDishyPackaging
+      Wap_Project_Name: NiceDishy.Packaging.wapproj
 
     steps:
     - name: Checkout
