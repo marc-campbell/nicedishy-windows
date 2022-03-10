@@ -1,6 +1,7 @@
 @echo off
 pushd "%~dp0"
-powershell [IO.Path]::GetFullPath((join-path (Get-Location) "\x86\Release\NiceDishy.exe"))
+powershell [IO.Path]::GetFullPath((join-path (Get-Location) "..\x86\Release\NiceDishy.exe"))
+dir D:\a\nicedishy-windows\nicedishy-windows\x86\Release
 echo "Creating x86 zip"
 powershell Compress-7Zip -Path ([IO.Path]::GetFullPath((join-path (Get-Location) "..\x86\Release\NiceDishy.exe"))) -ArchiveFileName "NiceDishyX86.zip" -Format Zip
 echo "Creating x64 zip"
