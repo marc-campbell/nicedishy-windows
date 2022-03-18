@@ -1,0 +1,56 @@
+name: NiceDishy Release
+on:
+  push:
+    tags:
+      - v*
+​
+jobs:
+  build:
+    runs-on: windows-2019
+​
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      uses: microsoft/setup-msbuild@v1
+​
+    - name: Setup NuGet
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Navigate to Workspace
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      run: cd $GITHUB_WORKSPACE
+​
+    - name: Create Build Directory
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      run: mkdir _build
+
+    - name: Restore Packages
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      run: nuget restore NiceDishy.sln
+​
+    - uses: olegtarasov/get-tag@v2.1
+      id: tagName
+​
+    - name: Build Solution
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      run: |
+        msbuild.exe NiceDishy.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release"
+
+        7z a -tzip "NiceDishy-${{ steps.tagName.outputs.tag }}.zip" "./NiceDishy/bin/Release/*"
+    - name: Publish
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.tagName.outputs.tag }}
+        files: |
+          NiceDishy-*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
