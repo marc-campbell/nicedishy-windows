@@ -35,10 +35,10 @@ jobs:
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       run: nuget restore NiceDishy.sln
-​
+
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
-​
+
     - name: Build Solution
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
