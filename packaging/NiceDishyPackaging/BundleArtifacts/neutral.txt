@@ -1,0 +1,2 @@
+MainPackage=C:\go\src\github.com\marc-campbell\nicedishy-windows\packaging\NiceDishyPackaging\bin\AnyCPU\Release\NiceDishyPackaging_0.1.2.0_AnyCPU.msix
+SymbolPackage=C:\go\src\github.com\marc-campbell\nicedishy-windows\packaging\NiceDishyPackaging\obj\Release\Symbols\NiceDishyPackaging_0.1.2.0_AnyCPU.appxsym
