@@ -14,9 +14,14 @@ namespace NiceDishy
     {
         public static ApiManager Shared = new ApiManager();
 
-        const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
-        const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
-        const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
+        // const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
+        // const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
+        // const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
+
+        const string ConnectDishyUrl = "https://nicedishy.com/connect_device";
+        const string PushDataUrl = "https://api.nicedishy.com/api/v1/stats";
+        const string PushSpeedUrl = "https://api.nicedishy.com/api/v1/speed";
+
 
         const string UriScheme = "nicedishy";
         const string UriFriendlyName = "NiceDishy Protocol";
