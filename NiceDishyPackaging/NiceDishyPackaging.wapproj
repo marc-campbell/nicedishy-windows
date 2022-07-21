@@ -113,9 +113,9 @@
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.19041.8" PrivateAssets="all" />
+    <ProjectReference Include="..\NiceDishy\NiceDishy.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NiceDishy\NiceDishy.csproj" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
   </ItemGroup>
 </Project>
