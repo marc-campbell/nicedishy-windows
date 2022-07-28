@@ -52,6 +52,9 @@ namespace NiceDishy
                 {
                     key.SetValue("freqSendingData", value);
                 }
+
+                App app = (App)Application.Current;
+                app.OnDataIntervalUpdated();
             }
 
             get
@@ -77,6 +80,9 @@ namespace NiceDishy
                 {
                     key.SetValue("freqSpeedTests", value);
                 }
+
+                App app = (App)Application.Current;
+                app.OnSpeedIntervalUpdated();
             }
 
             get

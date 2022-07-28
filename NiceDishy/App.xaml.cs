@@ -34,25 +34,7 @@ namespace NiceDishy
             // Register Uri Scheme
             ApiManager.Shared.Initialize();
             ApiManager.Shared.RegisterUriScheme();
-
-            // First push on start
-            if (ApiManager.Shared.IsLoggedIn())
-            {
-                DishyService.Shared.GetDataAsync();
-                DishyService.Shared.GetFastSpeed();
-            }
-
-            // Timer
-            CreateTimers();
-
-            // Fast Speed Test
-            TestFastSpeed();
-        }
-        private void TestFastSpeed()
-        {
-            downloadTester = new FastSpeedTest();
-            downloadTester.completedHandler += OnDownloadSpeedCompleted;
-            downloadTester.Download();
+            ApiManager.Shared.RegisterUriScheme();
         }
 
         private void OnDownloadSpeedCompleted(double speed)
@@ -90,9 +72,20 @@ namespace NiceDishy
             CreateTimers();
         }
 
+        public void OnDataIntervalUpdated()
+        {
+            CreateDataTimer();
+        }
+
+        public void OnSpeedIntervalUpdated()
+        {
+            CreateSpeedTestTimer();
+        }
+
         #region Timer
         public void CreateTimers()
         {
+            Console.WriteLine("CreateTimers");
             if (ApiManager.Shared.IsLoggedIn())
             {
                 CreateDataTimer();
@@ -102,6 +95,14 @@ namespace NiceDishy
 
         public void CreateDataTimer()
         {
+            if (dataTimer != null)
+            {
+                dataTimer.Stop();
+            }
+
+            // run immediately
+            DishyService.Shared.GetDataAsync();
+
             dataTimer = new DispatcherTimer();
             dataTimer.Interval = new TimeSpan(0, Preferences.FreqSendingData, 0);
             dataTimer.Tick += new EventHandler((sender, e) => DishyService.Shared.GetDataAsync());
@@ -110,8 +111,16 @@ namespace NiceDishy
 
         public void CreateSpeedTestTimer()
         {
+            if (speedTestTimer != null)
+            {
+                speedTestTimer.Stop();
+            }
+
+            // run immediately
+            DishyService.Shared.GetFastSpeed();
+
             speedTestTimer = new DispatcherTimer();
-            speedTestTimer.Interval = new TimeSpan(0, Preferences.FreqSendingData, 0);
+            speedTestTimer.Interval = new TimeSpan(0, Preferences.FreqSpeedTests, 0);
             speedTestTimer.Tick += new EventHandler((sender, e) => DishyService.Shared.GetFastSpeed());
             speedTestTimer.Start();
         }

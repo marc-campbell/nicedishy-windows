@@ -51,6 +51,7 @@ namespace NiceDishy
 
         public async void GetDataAsync()
         {
+            Console.WriteLine("GetDataAsync");
             Channel channel = new Channel("192.168.100.1:9200", ChannelCredentials.Insecure);
 
             var request = new Request();
@@ -60,7 +61,6 @@ namespace NiceDishy
 
             try
             {
-                // var response = client.Handle(request);
                 var dishyResponse = await client.HandleAsync(request);
                 var payload = new DishyDataPayload(dishyResponse);
 

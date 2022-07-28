@@ -14,18 +14,20 @@ namespace NiceDishy
     {
         public static ApiManager Shared = new ApiManager();
 
-        // const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
-        // const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
-        // const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
+        const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
+        const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
+        const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
 
-        const string ConnectDishyUrl = "https://nicedishy.com/connect_device";
-        const string PushDataUrl = "https://api.nicedishy.com/api/v1/stats";
-        const string PushSpeedUrl = "https://api.nicedishy.com/api/v1/speed";
+        // const string ConnectDishyUrl = "https://nicedishy.com/connect_device";
+        // const string PushDataUrl = "https://api.nicedishy.com/api/v1/stats";
+        // const string PushSpeedUrl = "https://api.nicedishy.com/api/v1/speed";
 
 
         const string UriScheme = "nicedishy";
         const string UriFriendlyName = "NiceDishy Protocol";
-        
+
+        const string UserAgent = "NiceDishy-Windows/0.0.1";
+
         #region Token
         public static readonly DependencyProperty TokenProperty =
            DependencyProperty.Register("Token", typeof(string), typeof(ApiManager), new
@@ -144,6 +146,7 @@ namespace NiceDishy
                 request.RequestUri = new Uri(PushSpeedUrl);
                 request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
                 request.Headers.Add("Authorization", string.Format("Token {0}", Token));
+                request.Headers.Add("User-Agent", UserAgent);
 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 var response = await client.SendAsync(request);
@@ -170,12 +173,15 @@ namespace NiceDishy
 
             try
             {
+                Console.WriteLine("Sending data to api");
+
                 var client = new HttpClient();
                 var request = new HttpRequestMessage();
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(PushDataUrl);
                 request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
                 request.Headers.Add("Authorization", string.Format("Token {0}", Token));
+                request.Headers.Add("User-Agent", UserAgent);
 
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 var response = await client.SendAsync(request);
