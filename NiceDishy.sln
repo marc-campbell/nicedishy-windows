@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDishy", "NiceDishy\NiceDishy.csproj", "{609FA7B3-A2A2-4D05-9F7E-71E468429D29}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDishyGRPC", "NiceDishyGRPC\NiceDishyGRPC.csproj", "{3AA2FE49-4F78-4F78-B590-69F359E9BB8E}"
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "NiceDishyPackaging", "NiceDishyPackaging\NiceDishyPackaging.wapproj", "{541C9EC4-1ED8-4BC1-891E-AB485E9AFD04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceDishyCore", "NiceDishyCore\NiceDishyCore.csproj", "{6F3D160F-42B6-418B-B951-7A5A3DB539F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,26 @@ Global
 		{541C9EC4-1ED8-4BC1-891E-AB485E9AFD04}.Release|x86.ActiveCfg = Release|x86
 		{541C9EC4-1ED8-4BC1-891E-AB485E9AFD04}.Release|x86.Build.0 = Release|x86
 		{541C9EC4-1ED8-4BC1-891E-AB485E9AFD04}.Release|x86.Deploy.0 = Release|x86
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|ARM.Build.0 = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Debug|x86.Build.0 = Debug|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|ARM.Build.0 = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|ARM64.Build.0 = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|x64.Build.0 = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{6F3D160F-42B6-418B-B951-7A5A3DB539F4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

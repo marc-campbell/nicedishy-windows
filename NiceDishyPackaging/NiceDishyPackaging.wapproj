@@ -61,9 +61,9 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <EntryPointProjectUniqueName>..\NiceDishy\NiceDishy.csproj</EntryPointProjectUniqueName>
     <PackageCertificateKeyFile>NiceDishyPackaging_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <EntryPointProjectUniqueName>..\NiceDishy\NiceDishy.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <AppxBundle>Always</AppxBundle>

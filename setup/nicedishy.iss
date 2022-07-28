@@ -36,8 +36,16 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishy\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyGRPC\bin\Release\NiceDishyGRPC.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\NiceDishyCore.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\D3DCompiler_47_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\grpc_csharp_ext.x64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\grpc_csharp_ext.x86.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\libgrpc_csharp_ext.x64.dylib"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\libgrpc_csharp_ext.x64.so"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\PenImc_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\PresentationNative_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\vcruntime140_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\wpfgfx_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
