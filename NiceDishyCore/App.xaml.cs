@@ -59,18 +59,18 @@ namespace NiceDishyCore
         }
         public void OnTokenUpdated()
         {
-            if (string.IsNullOrEmpty(ApiManager.Shared.Token))
-            {
-                ContextMenu menu = (ContextMenu)FindResource("SysTrayMenu");
-                notifyIcon.ContextMenu = menu;
-            }
-            else
-            {
-                ContextMenu menu = (ContextMenu)FindResource("SysTrayMenuLoggedIn");
-                notifyIcon.ContextMenu = menu;
-            }
+            //if (string.IsNullOrEmpty(ApiManager.Shared.Token))
+            //{
+            //    ContextMenu menu = (ContextMenu)FindResource("SysTrayMenu");
+            //    notifyIcon.ContextMenu = menu;
+            //}
+            //else
+            //{
+            //    ContextMenu menu = (ContextMenu)FindResource("SysTrayMenuLoggedIn");
+            //    notifyIcon.ContextMenu = menu;
+            //}
 
-            CreateTimers();
+            //CreateTimers();
         }
 
         public void OnDataIntervalUpdated()

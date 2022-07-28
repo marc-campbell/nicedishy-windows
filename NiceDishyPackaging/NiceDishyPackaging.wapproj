@@ -63,7 +63,7 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateKeyFile>NiceDishyPackaging_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <EntryPointProjectUniqueName>..\NiceDishy\NiceDishy.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\NiceDishyCore\NiceDishyCore.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <AppxBundle>Always</AppxBundle>
@@ -116,6 +116,6 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.19041.8" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NiceDishy\NiceDishy.csproj" />
+    <ProjectReference Include="..\NiceDishyCore\NiceDishyCore.csproj" />
   </ItemGroup>
 </Project>
