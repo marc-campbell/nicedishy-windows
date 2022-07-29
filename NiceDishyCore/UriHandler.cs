@@ -54,8 +54,7 @@ namespace NiceDishyCore
 				// eturn handler;
 			}
 			catch {
-				Console.WriteLine("Couldn't get remote UriHandler object.");
-				Console.WriteLine();
+				System.Diagnostics.Debug.WriteLine("Couldn't get remote UriHandler object.");
 			}
 
 			return null;

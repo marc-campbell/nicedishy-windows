@@ -17,28 +17,41 @@ namespace NiceDishyCore
         FastSpeedTest downloadTester;
         FastSpeedTest uploadTester;
 
+        bool isTestInProgress;
+
         public DishyService()
         {
             downloadTester = new FastSpeedTest();
             downloadTester.completedHandler += OnDownloadSpeedCompleted;
+
             uploadTester = new FastSpeedTest();
             uploadTester.completedHandler += OnUploadSpeedCompleted;
+
+            isTestInProgress = false;
         }
 
         public void GetFastSpeed()
         {
+            if (isTestInProgress)
+            {
+                return;
+            }
+
+            System.Diagnostics.Debug.WriteLine("Starting a speed test");
+            isTestInProgress = true;
             downloadTester.Download();
         }
 
         private void OnDownloadSpeedCompleted(double speed)
         {
-            Console.WriteLine("Final Download Speed is {0} Mbps", (long)speed / (1024 * 1024));
+            System.Diagnostics.Debug.WriteLine("Final Download Speed is {0} Mbps", (long)speed / (1024 * 1024));
             uploadTester.Upload();
         }
         private void OnUploadSpeedCompleted(double speed)
         {
-            Console.WriteLine("Final Upload Speed is {0} Mbps", (long)speed / (1024 * 1024));
+            System.Diagnostics.Debug.WriteLine("Final Upload Speed is {0} Mbps", (long)speed / (1024 * 1024));
             PushSpeed();
+            isTestInProgress = false;
         }
         public void PushSpeed()
         {

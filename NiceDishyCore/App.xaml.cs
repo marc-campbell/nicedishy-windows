@@ -59,6 +59,7 @@ namespace NiceDishyCore
             refreshToken(true);
             createRegistryWatchTimer();
 
+            CreateTimers(false);
         }
         private void OnDownloadSpeedCompleted(double speed)
         {
@@ -100,7 +101,7 @@ namespace NiceDishyCore
                     notifyIcon.ContextMenu = menu;
                 }
 
-                CreateTimers();
+                CreateTimers(!force);
             }
         }
         public void OnTokenUpdated()
@@ -112,17 +113,17 @@ namespace NiceDishyCore
             }
     
 
-            CreateTimers();
+            CreateTimers(true);
         }
 
         public void OnDataIntervalUpdated()
         {
-            CreateDataTimer();
+            CreateDataTimer(true);
         }
 
         public void OnSpeedIntervalUpdated()
         {
-            CreateSpeedTestTimer();
+            CreateSpeedTestTimer(true);
         }
 
         private void createRegistryWatchTimer()
@@ -133,17 +134,16 @@ namespace NiceDishyCore
             registryWatchTimer.Start();
         }
         #region Timer
-        public void CreateTimers()
+        public void CreateTimers(bool runNow)
         {
-            Console.WriteLine("CreateTimers");
             if (ApiManager.Shared.IsLoggedIn())
             {
-                CreateDataTimer();
-                CreateSpeedTestTimer();
+                CreateDataTimer(runNow);
+                CreateSpeedTestTimer(runNow);
             }
         }
 
-        public void CreateDataTimer()
+        public void CreateDataTimer(bool runNow)
         {
             if (dataTimer != null)
             {
@@ -151,7 +151,10 @@ namespace NiceDishyCore
             }
 
             // run immediately
-            DishyService.Shared.GetDataAsync();
+            if (runNow)
+            {
+                DishyService.Shared.GetDataAsync();
+            }
 
             dataTimer = new DispatcherTimer();
             dataTimer.Interval = new TimeSpan(0, Preferences.FreqSendingData, 0);
@@ -159,7 +162,7 @@ namespace NiceDishyCore
             dataTimer.Start();
         }
 
-        public void CreateSpeedTestTimer()
+        public void CreateSpeedTestTimer(bool runNow)
         {
             if (speedTestTimer != null)
             {
@@ -167,7 +170,10 @@ namespace NiceDishyCore
             }
 
             // run immediately
-            DishyService.Shared.GetFastSpeed();
+            if (runNow)
+            {
+                DishyService.Shared.GetFastSpeed();
+            }
 
             speedTestTimer = new DispatcherTimer();
             speedTestTimer.Interval = new TimeSpan(0, Preferences.FreqSpeedTests, 0);

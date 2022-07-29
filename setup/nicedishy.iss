@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NiceDishy"
-#define MyAppVersion "0.0.2"
+#define MyAppVersion "0.0.3"
 #define MyAppPublisher "Marc Campbell"
 #define MyAppURL "https://nicedishy.com"
 #define MyAppExeName "NiceDishy.exe"

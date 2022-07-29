@@ -13,7 +13,7 @@ namespace NiceDishyCore
 {
     class FastSpeedTest
     {
-        public int fastServerCount = 1;
+        public int fastServerCount = 5;
         public int timeout = 15;
 
         int[] payloadSizes = { 2048, 26214400 };
@@ -46,13 +46,13 @@ namespace NiceDishyCore
                 var response = await httpClient.SendAsync(request);
                 if (!response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Unable to connect to fast.com");
+                    System.Diagnostics.Debug.WriteLine("Unable to connect to fast.com");
                     return false;
                 }
                 var res = await response.Content.ReadAsStringAsync();
                 if (string.IsNullOrEmpty(res))
                 {
-                    Console.WriteLine("Unable to load fast.com");
+                    System.Diagnostics.Debug.WriteLine("Unable to load fast.com");
                     return false;
                 }
                 //Console.Write(res);
@@ -68,20 +68,20 @@ namespace NiceDishyCore
                 var jsResponse = await httpClient.SendAsync(jsRequest);
                 if (!jsResponse.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Unable to fetch js from fast.com");
+                    System.Diagnostics.Debug.WriteLine("Unable to fetch js from fast.com");
                     return false;
                 }
                 var jsRes = await jsResponse.Content.ReadAsStringAsync();
                 if (string.IsNullOrEmpty(jsRes))
                 {
-                    Console.WriteLine("Unable to load js from fast.com");
+                    System.Diagnostics.Debug.WriteLine("Unable to load js from fast.com");
                     return false;
                 }
                 //Console.Write(jsRes);
                 var jsMatched = Matches("token:\"[A-Z]+", jsRes);
                 if (jsMatched.Count < 1)
                 {
-                    Console.WriteLine("Unable to find string token.");
+                    System.Diagnostics.Debug.WriteLine("Unable to find string token.");
                     return false;
                 }
                 token = jsMatched[0].Split('\"')[1];
@@ -90,7 +90,7 @@ namespace NiceDishyCore
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
             return true;
@@ -103,7 +103,7 @@ namespace NiceDishyCore
             {
                 if (string.IsNullOrEmpty(token))
                 {
-                    Console.WriteLine("No token for fetching targets");
+                    System.Diagnostics.Debug.WriteLine("No token for fetching targets");
                     return;
                 }
 
@@ -113,13 +113,13 @@ namespace NiceDishyCore
                 var response = await httpClient.SendAsync(request);
                 if (!response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Unable to fetch targets from fast.com");
+                    System.Diagnostics.Debug.WriteLine("Unable to fetch targets from fast.com");
                     return;
                 }
                 var res = await response.Content.ReadAsStringAsync();
                 if (string.IsNullOrEmpty(res))
                 {
-                    Console.WriteLine("Unable to load targets from fast.com");
+                    System.Diagnostics.Debug.WriteLine("Unable to load targets from fast.com");
                     return;
                 }
                 //Console.Write(res);
@@ -133,7 +133,7 @@ namespace NiceDishyCore
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
 
@@ -200,7 +200,12 @@ namespace NiceDishyCore
                 timer.Tick += new EventHandler((sender, e) =>
                 {
                     double curSpeed = speed;
-                    Console.WriteLine("Speed: {0}, {1} kbps", (int)curSpeed, (int)curSpeed / 1024);
+                    string speedDirection = "Upload";
+                    if (isDownload)
+                    {
+                        speedDirection = "Download";
+                    }
+                    System.Diagnostics.Debug.WriteLine("{0} Speed: {1}, {2} kbps", speedDirection, (int)curSpeed, (int)curSpeed / 1024);
                     int elasped = (int)(DateTime.Now - timestamp).TotalSeconds;
                     if (elasped > timeout)
                     {

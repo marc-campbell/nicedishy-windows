@@ -14,13 +14,13 @@ namespace NiceDishyCore
     {
         public static ApiManager Shared = new ApiManager();
 
-        const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
-        const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
-        const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
+        // const string ConnectDishyUrl = "https://nicedishy-marccampbell.cloud.okteto.net/connect_device";
+        // const string PushDataUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/stats";
+        // const string PushSpeedUrl = "https://nicedishy-api-marccampbell.cloud.okteto.net/api/v1/speed";
 
-        // const string ConnectDishyUrl = "https://nicedishy.com/connect_device";
-        // const string PushDataUrl = "https://api.nicedishy.com/api/v1/stats";
-        // const string PushSpeedUrl = "https://api.nicedishy.com/api/v1/speed";
+        const string ConnectDishyUrl = "https://nicedishy.com/connect_device";
+        const string PushDataUrl = "https://api.nicedishy.com/api/v1/stats";
+        const string PushSpeedUrl = "https://api.nicedishy.com/api/v1/speed";
 
 
         const string UriScheme = "nicedishy";
@@ -150,6 +150,8 @@ namespace NiceDishyCore
             if (string.IsNullOrEmpty(Token))
                 return;
 
+            System.Diagnostics.Debug.WriteLine("Sending speed to api");
+
             try
             {
                 var client = new HttpClient();
@@ -165,17 +167,17 @@ namespace NiceDishyCore
                 if (response.IsSuccessStatusCode)
                 {
                     var res = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(await response.Content.ReadAsStringAsync());
-                    Console.Write(res);
+                    System.Diagnostics.Debug.Write(res);
                 }
                 else
                 {
                     var res = await response.Content.ReadAsStringAsync();
-                    Console.Write(res);
+                    System.Diagnostics.Debug.Write(res);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                System.Diagnostics.Debug.WriteLine(e.ToString());
             }
         }
         public async void PushData(string payload)
@@ -185,7 +187,7 @@ namespace NiceDishyCore
 
             try
             {
-                Console.WriteLine("Sending data to api");
+                System.Diagnostics.Debug.WriteLine("Sending data to api");
 
                 var client = new HttpClient();
                 var request = new HttpRequestMessage();
@@ -211,7 +213,7 @@ namespace NiceDishyCore
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                System.Diagnostics.Debug.WriteLine(e.ToString());
             }
         }
         #endregion

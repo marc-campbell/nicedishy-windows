@@ -116,7 +116,7 @@ namespace NiceDishyCore
         #region
         void DownloadCompleted(object sender, DownloadDataCompletedEventArgs e)
         {
-            Console.WriteLine("{0} - Download Completed with speed ({1} kbps)", reqIndex, averageSpeed / 1024);
+            System.Diagnostics.Debug.WriteLine("{0} - Download Completed with speed ({1} kbps)", reqIndex, averageSpeed / 1024);
         }
         void DownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -126,7 +126,7 @@ namespace NiceDishyCore
         }
         void UploadCompleted(object sender, UploadDataCompletedEventArgs e)
         {
-            Console.WriteLine("{0} - Upload Completed with speed ({1} kbps)", reqIndex, averageSpeed / 1024);
+            System.Diagnostics.Debug.WriteLine("{0} - Upload Completed with speed ({1} kbps)", reqIndex, averageSpeed / 1024);
         }
         void UploadProgress(object sender, UploadProgressChangedEventArgs e)
         {
