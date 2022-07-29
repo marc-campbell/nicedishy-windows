@@ -47,15 +47,22 @@ namespace NiceDishyCore
         // Initialize will load any previously saved token
         public void Initialize()
         {
+            Token = readToken();
+        }
+
+        public string readToken() 
+        {
             RegistryKey subKey = Registry.CurrentUser.OpenSubKey("Software", true);
             using (var key = subKey.CreateSubKey("NiceDishy"))
             {
                 var token = key.GetValue("token");
                 if (token != null)
                 {
-                    Token = token.ToString();
+                    return token.ToString();
                 }
             }
+
+            return "";
         }
 
         #region Connect
@@ -65,7 +72,11 @@ namespace NiceDishyCore
         }
         public void ConnectDishy()
         {
-            System.Diagnostics.Process.Start(ConnectDishyUrl);
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = ConnectDishyUrl,
+                UseShellExecute = true
+            });
         }
         public void DisconnectDishy()
         {
@@ -97,7 +108,8 @@ namespace NiceDishyCore
             {
                 // Replace typeof(App) by the class that contains the Main method or any class located in the project that produces the exe.
                 // or replace typeof(App).Assembly.Location by anything that gives the full path to the exe
-                string applicationLocation = typeof(App).Assembly.Location;
+                string applicationLocation = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+
 
                 key.SetValue("", "URL:" + UriFriendlyName);
                 key.SetValue("URL Protocol", "");

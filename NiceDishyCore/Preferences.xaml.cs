@@ -31,15 +31,15 @@ namespace NiceDishyCore
 
         private void OnCancel(object sender, RoutedEventArgs e)
         {
-            Close();
+            ((App)Application.Current).preferences.Close();
         }
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
             FreqSendingData = Convert.ToInt32(slFreqSendingData.Value); 
-            FreqSpeedTests = Convert.ToInt32(slFreqSpeedTests.Value); 
+            FreqSpeedTests = Convert.ToInt32(slFreqSpeedTests.Value);
 
-            Close();
+            ((App)Application.Current).preferences.Close();
         }
 
         #region Preferences

@@ -9,6 +9,7 @@
     <FileVersion>0.0.2</FileVersion>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <PublishReadyToRun>true</PublishReadyToRun>
+    <AssemblyName>NiceDishy</AssemblyName>
     <!-- <PublishSingleFile>true</PublishSingleFile> -->
     <!-- <SelfContained>true</SelfContained> -->
   </PropertyGroup>

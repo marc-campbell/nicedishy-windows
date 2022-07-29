@@ -36,7 +36,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\NiceDishyCore.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\NiceDishy.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\D3DCompiler_47_cor3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\grpc_csharp_ext.x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\go\src\github.com\marc-campbell\nicedishy-windows\NiceDishyCore\bin\Release\net6.0-windows\publish\win-x86\grpc_csharp_ext.x86.dll"; DestDir: "{app}"; Flags: ignoreversion

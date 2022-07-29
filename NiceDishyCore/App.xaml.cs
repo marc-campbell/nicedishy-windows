@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
+using System.Threading;
 
 namespace NiceDishyCore
 {
@@ -17,27 +18,48 @@ namespace NiceDishyCore
 
         private DispatcherTimer dataTimer;
         private DispatcherTimer speedTestTimer;
+        private DispatcherTimer registryWatchTimer;
 
         private FastSpeedTest downloadTester;
         private FastSpeedTest uploadTester;
 
+        private static Mutex _mutex = null;
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            // ensure there's a single instance
+            const string appName = "NiceDishy";
+            bool createdNew;
+
+            _mutex = new Mutex(true, appName, out createdNew);
+            if (!createdNew)
+            {
+                // write the token, if there is one in the args
+                HandleArguments(e);
+
+                // and shutdown
+                Application.Current.Shutdown();
+            }
+
             base.OnStartup(e);
 
-            // Register or Handle Uri Scheme
             HandleArguments(e);
 
             // Create the notifyicon (it's a resource declared in NotifyIconResources.xaml)
             App app = (App)Application.Current;
+
+            app.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
             notifyIcon = (TaskbarIcon)app.FindResource("NotifyIcon");
 
             // Register Uri Scheme
             ApiManager.Shared.Initialize();
             ApiManager.Shared.RegisterUriScheme();
-        }
 
+            refreshToken(true);
+            createRegistryWatchTimer();
+
+        }
         private void OnDownloadSpeedCompleted(double speed)
         {
             Console.WriteLine("Final Download Speed is {0} Mbps", (long)speed / (1024 * 1024));
@@ -57,20 +79,40 @@ namespace NiceDishyCore
             notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
             base.OnExit(e);
         }
+
+        private void refreshToken(bool force)
+        {
+            var currentToken = ApiManager.Shared.Token;
+            var registryToken = ApiManager.Shared.readToken();
+
+            if (force || currentToken != registryToken)
+            {
+                ApiManager.Shared.Token = registryToken;
+
+                if (string.IsNullOrEmpty(ApiManager.Shared.Token)) 
+                {
+                    ContextMenu menu = (ContextMenu)FindResource("SysTrayMenu");
+                    notifyIcon.ContextMenu = menu;
+                } 
+                else
+                {
+                    ContextMenu menu = (ContextMenu)FindResource("SysTrayMenuLoggedIn");
+                    notifyIcon.ContextMenu = menu;
+                }
+
+                CreateTimers();
+            }
+        }
         public void OnTokenUpdated()
         {
-            //if (string.IsNullOrEmpty(ApiManager.Shared.Token))
-            //{
-            //    ContextMenu menu = (ContextMenu)FindResource("SysTrayMenu");
-            //    notifyIcon.ContextMenu = menu;
-            //}
-            //else
-            //{
-            //    ContextMenu menu = (ContextMenu)FindResource("SysTrayMenuLoggedIn");
-            //    notifyIcon.ContextMenu = menu;
-            //}
+            if (string.IsNullOrEmpty(ApiManager.Shared.Token))
+            {
+                ContextMenu menu = (ContextMenu)FindResource("SysTrayMenu");
+                notifyIcon.ContextMenu = menu;
+            }
+    
 
-            //CreateTimers();
+            CreateTimers();
         }
 
         public void OnDataIntervalUpdated()
@@ -83,6 +125,13 @@ namespace NiceDishyCore
             CreateSpeedTestTimer();
         }
 
+        private void createRegistryWatchTimer()
+        {
+            registryWatchTimer = new DispatcherTimer();
+            registryWatchTimer.Interval = new TimeSpan(0, 0, 3);
+            registryWatchTimer.Tick += new EventHandler((sender, e) => this.refreshToken(false));
+            registryWatchTimer.Start();
+        }
         #region Timer
         public void CreateTimers()
         {
