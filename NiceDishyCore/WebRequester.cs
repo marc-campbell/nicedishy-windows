@@ -121,8 +121,12 @@ namespace NiceDishyCore
         void DownloadProgress(object sender, DownloadProgressChangedEventArgs e)
         {
             if (isStopped)
+            {
                 return;
-            AddPieceSpeed(e.BytesReceived);
+            }
+
+            if (e.ProgressPercentage % 5 == 0)
+                AddPieceSpeed(e.BytesReceived);
         }
         void UploadCompleted(object sender, UploadDataCompletedEventArgs e)
         {
@@ -131,8 +135,12 @@ namespace NiceDishyCore
         void UploadProgress(object sender, UploadProgressChangedEventArgs e)
         {
             if (isStopped)
+            {
                 return;
-            AddPieceSpeed(e.BytesSent);
+            }
+
+            if (e.ProgressPercentage % 2 == 0)
+                AddPieceSpeed(e.BytesSent);
         }
         #endregion
 
@@ -140,26 +148,11 @@ namespace NiceDishyCore
         {
             DateTime curTm = DateTime.Now;
             double delta = (curTm - startTime).TotalSeconds;
-
-            double limitedSec = 0;
-            if (reqType == ReqType.download)
-                limitedSec = 0.003;
-
-            if (delta > limitedSec)
-            {
-                long bits = (bytes - byteAdded) * 8;
-                if (bits == 0)
-                    return;
-
-                double speed = bits / delta;
-
-                //Console.WriteLine("{2} - delta({0}), bytes({1})", delta, bits / 8, reqIndex);
-
-                pieceSpeed[pieceIndex] = speed;
-                pieceIndex = (pieceIndex + 1) % pieceCount;
-                startTime = curTm;
-                byteAdded = bytes;
-            }
+            double dSize = (double)bytes;
+            double speed = dSize * 8 / delta;
+            pieceSpeed[pieceIndex] = speed;
+            pieceIndex = (pieceIndex + 1) % pieceCount;
+            startTime = curTm;
         }
     }
 }
