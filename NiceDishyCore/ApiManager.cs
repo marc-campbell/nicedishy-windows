@@ -26,7 +26,7 @@ namespace NiceDishyCore
         const string UriScheme = "nicedishy";
         const string UriFriendlyName = "NiceDishy Protocol";
 
-        const string UserAgent = "NiceDishy-Windows/0.0.1";
+        const string UserAgent = "NiceDishy-Windows/0.0.3";
 
         #region Token
         public static readonly DependencyProperty TokenProperty =
